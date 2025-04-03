@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortality Timer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-default">
+    <div class="container">
+        <h1>Mortality Timer</h1>
+        <p class="subtitle">A reminder to make every moment count</p>
+        
+        <div class="settings">
+            <div class="input-group">
+                <label for="birthdate">Your birthdate:</label>
+                <input type="date" id="birthdate" name="birthdate">
+            </div>
+            <div class="input-group">
+                <label for="lifeExpectancy">Expected lifespan (years):</label>
+                <input type="number" id="lifeExpectancy" name="lifeExpectancy" value="80" min="1" max="120">
+            </div>
+            <div class="input-group">
+                <label for="userName">Your name (for watch branding):</label>
+                <input type="text" id="userName" name="userName" placeholder="Enter your name">
+            </div>
+            <div class="input-group">
+                <label for="visualization">Visualization style:</label>
+                <select id="visualization" name="visualization">
+                    <option value="clock">Analog Clock</option>
+                    <option value="calendar">Calendar View</option>
+                    <option value="blocks">Time Blocks</option>
+                    <option value="hourglass">Hourglass</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="theme">Choose a theme:</label>
+                <select id="theme" class="form-control">
+                    <option value="default">Default</option>
+                    <option value="blood">Blood</option>
+                    <option value="ghost">Ghost</option>
+                    <option value="cemetery">Cemetery</option>
+                    <option value="pumpkin">Pumpkin</option>
+                    <option value="spring">Spring</option>
+                    <option value="summer">Summer</option>
+                    <option value="autumn">Autumn</option>
+                    <option value="winter">Winter</option>
+                    <option value="birthday">Birthday</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="notifications">Reminder frequency:</label>
+                <select id="notifications" name="notifications">
+                    <option value="none">No reminders</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </div>
+            <button id="calculate">Calculate</button>
+        </div>
+        
+        <div class="timer-container" id="timerContainer">
+            <div class="timer-header">
+                <h2>Time Remaining</h2>
+                <p id="endDate"></p>
+            </div>
+            
+            <div class="visualization-container">
+                <!-- Analog Clock Visualization -->
+                <div class="analog-clock visualization" id="clockVisualization">
+                    <div class="clock-face">
+                        <div class="brand-name" id="brandName">MEMENTO</div>
+                        <div class="center-point"></div>
+                        <div class="hand hour-hand" id="hourHand"></div>
+                        <div class="hand minute-hand" id="minuteHand"></div>
+                        <div class="hand second-hand" id="secondHand"></div>
+                        
+                        <!-- Hour markers -->
+                        <div class="hour-marker marker-12"></div>
+                        <div class="hour-marker marker-1"></div>
+                        <div class="hour-marker marker-2"></div>
+                        <div class="hour-marker marker-3"></div>
+                        <div class="hour-marker marker-4"></div>
+                        <div class="hour-marker marker-5"></div>
+                        <div class="hour-marker marker-6"></div>
+                        <div class="hour-marker marker-7"></div>
+                        <div class="hour-marker marker-8"></div>
+                        <div class="hour-marker marker-9"></div>
+                        <div class="hour-marker marker-10"></div>
+                        <div class="hour-marker marker-11"></div>
+                        
+                        <!-- Minute markers -->
+                        <div class="minute-markers"></div>
+                        
+                        <!-- Decorative elements -->
+                        <div class="inner-circle"></div>
+                        <div class="outer-ring"></div>
+                    </div>
+                    <p class="clock-label">Life Clock</p>
+                </div>
+                
+                <!-- Calendar Visualization -->
+                <div class="calendar-view visualization" id="calendarVisualization">
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                    <p class="calendar-label">Each square represents one month of your life</p>
+                </div>
+                
+                <!-- Time Blocks Visualization -->
+                <div class="blocks-view visualization" id="blocksVisualization">
+                    <div class="blocks-container" id="blocksContainer"></div>
+                    <p class="blocks-label">Each block represents one year of your life</p>
+                </div>
+                
+                <!-- Hourglass Visualization -->
+                <div class="hourglass-view visualization" id="hourglassVisualization">
+                    <div class="hourglass">
+                        <div class="hourglass-top" id="hourglassTop"></div>
+                        <div class="hourglass-middle"></div>
+                        <div class="hourglass-bottom" id="hourglassBottom"></div>
+                    </div>
+                    <p class="hourglass-label">The sands of time</p>
+                </div>
+            </div>
+            
+            <div class="timer">
+                <div class="time-block">
+                    <div class="time" id="years">--</div>
+                    <div class="label">Years</div>
+                </div>
+                <div class="time-block">
+                    <div class="time" id="months">--</div>
+                    <div class="label">Months</div>
+                </div>
+                <div class="time-block">
+                    <div class="time" id="days">--</div>
+                    <div class="label">Days</div>
+                </div>
+                <div class="time-block">
+                    <div class="time" id="hours">--</div>
+                    <div class="label">Hours</div>
+                </div>
+                <div class="time-block">
+                    <div class="time" id="minutes">--</div>
+                    <div class="label">Minutes</div>
+                </div>
+                <div class="time-block">
+                    <div class="time" id="seconds">--</div>
+                    <div class="label">Seconds</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="life-percentage" id="lifePercentage">--% of life completed</p>
+            
+            <div class="share-options">
+                <button id="screenshot" class="icon-button" title="Take Screenshot">📷</button>
+                <button id="share" class="icon-button" title="Share">📤</button>
+                <button id="save" class="icon-button" title="Save as Image">💾</button>
+            </div>
+            
+            <div class="milestones-container" id="milestonesContainer">
+                <h3>Life Milestones</h3>
+                <div class="milestone-timeline">
+                    <div class="milestone-progress" id="milestoneProgress"></div>
+                    <div class="milestone-markers" id="milestoneMarkers"></div>
+                </div>
+                <button id="addMilestone" class="secondary-button">Add Milestone</button>
+                
+                <div class="milestone-form" id="milestoneForm">
+                    <input type="text" id="milestoneTitle" placeholder="Milestone title">
+                    <input type="date" id="milestoneDate">
+                    <button id="saveMilestone" class="secondary-button">Save</button>
+                    <button id="cancelMilestone" class="secondary-button">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="timeline-container" id="timelineContainer">
+                <h3>Life Timeline</h3>
+                <div class="timeline-scroll">
+                    <div class="timeline-track" id="timelineTrack">
+                        <!-- Timeline items will be added here by JavaScript -->
+                    </div>
+                    <div class="timeline-now-marker" id="timelineNowMarker"></div>
+                </div>
+                <button id="addTimelineEvent" class="secondary-button">Add Life Event</button>
+                
+                <div class="timeline-form" id="timelineForm">
+                    <input type="text" id="eventTitle" placeholder="Event title">
+                    <input type="date" id="eventDate">
+                    <textarea id="eventDescription" placeholder="Event description"></textarea>
+                    <button id="saveEvent" class="secondary-button">Save</button>
+                    <button id="cancelEvent" class="secondary-button">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="goals-container" id="goalsContainer">
+                <h3>Life Goals</h3>
+                <div class="goals-list" id="goalsList"></div>
+                <div class="add-goal-form">
+                    <input type="text" id="newGoalInput" placeholder="Enter a new life goal...">
+                    <button id="addGoal" class="secondary-button">Add</button>
+                </div>
+            </div>
+            
+            <div class="time-tracker-container" id="timeTrackerContainer">
+                <h3>Time Well Spent</h3>
+                <div class="activity-categories">
+                    <div class="activity-category">
+                        <span class="category-color" style="background-color: #4CAF50;"></span>
+                        <span class="category-name">Personal Growth</span>
+                        <span class="category-time" id="personalGrowthTime">0h</span>
+                    </div>
+                    <div class="activity-category">
+                        <span class="category-color" style="background-color: #2196F3;"></span>
+                        <span class="category-name">Relationships</span>
+                        <span class="category-time" id="relationshipsTime">0h</span>
+                    </div>
+                    <div class="activity-category">
+                        <span class="category-color" style="background-color: #FFC107;"></span>
+                        <span class="category-name">Work</span>
+                        <span class="category-time" id="workTime">0h</span>
+                    </div>
+                    <div class="activity-category">
+                        <span class="category-color" style="background-color: #9C27B0;"></span>
+                        <span class="category-name">Health</span>
+                        <span class="category-time" id="healthTime">0h</span>
+                    </div>
+                </div>
+                <button id="logActivity" class="secondary-button">Log Activity</button>
+                
+                <div class="activity-form" id="activityForm">
+                    <select id="activityCategory">
+                        <option value="personalGrowth">Personal Growth</option>
+                        <option value="relationships">Relationships</option>
+                        <option value="work">Work</option>
+                        <option value="health">Health</option>
+                    </select>
+                    <input type="number" id="activityHours" placeholder="Hours" min="0" max="24">
+                    <input type="text" id="activityDescription" placeholder="Activity description">
+                    <button id="saveActivity" class="secondary-button">Save</button>
+                    <button id="cancelActivity" class="secondary-button">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="advice-container" id="adviceContainer">
+                <h3>Time Wisdom</h3>
+                <p id="personalizedAdvice" class="advice-text">Loading personalized insights...</p>
+            </div>
+        </div>
+        
+        <div class="quote" id="quoteContainer">
+            <p id="quoteText">"The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time." - Mark Twain</p>
+            <button id="newQuote" class="icon-button">↻</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
